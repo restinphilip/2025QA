@@ -12,7 +12,7 @@ pipeline{
   stage('docker_volume'){
     steps{
       sh'''
-      docker create storage
+      docker volume create storage
       docker cp index.html storage
       '''
     }
@@ -20,7 +20,7 @@ pipeline{
   stage('Httpd_container'){
     steps{
       sh'''
-      docker run -dp 80:80  --name c1 --network test httpd -v velocity:/usr/local/apache2/htdocs
+      docker run -dp 80:80  --name c1 --network test httpd -v storage:/usr/local/apache2/htdocs
       '''
     }
   }
