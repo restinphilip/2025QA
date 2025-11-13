@@ -1,26 +1,29 @@
 pipeline{
   agent {
-    label 'slave-1'
+    label 'qa'
   }
   stage('custom_network'){
     steps{
       sh'''
-      docker network create test --subnet=10.10.0.0/16 --gateway=10.10.0.1
+      docker network create test --subnet=10.10.0.0/16 --gateway=10.10.0.1 || true
       '''
     }
   }
-  stage('docker_volume'){
-    steps{
-      sh'''
-      docker volume create storage
-      docker cp index.html storage
-      '''
-    }
+  stage('copy_index') {
+  steps {
+    sh '''
+    sudo mkdir -p /mnt/website || true
+    rm -rf  /mnt/website/*
+    sudo chmod -R 755 /mnt/website
+    cp index.html /mnt/website
+    '''
   }
+}
+
   stage('Httpd_container'){
     steps{
       sh'''
-      docker run -dp 80:80  --name c1 --network test httpd -v storage:/usr/local/apache2/htdocs
+       docker run -dp 80:80 --name c1 --network test -v /mnt/website:/usr/local/apache2/htdocs httpd
       '''
     }
   }
