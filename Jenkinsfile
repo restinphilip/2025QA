@@ -5,7 +5,7 @@ pipeline{
   stage('custom_network'){
     steps{
       sh'''
-      docker network create test --subnet=10.10.0.0/16 --gateway=10.10.0.1 || true
+      sudo docker network create test --subnet=10.10.0.0/16 --gateway=10.10.0.1 || true
       '''
     }
   }
@@ -13,9 +13,9 @@ pipeline{
   steps {
     sh '''
     sudo mkdir -p /mnt/website || true
-    rm -rf  /mnt/website/*
+    sudo rm -rf  /mnt/website/*
     sudo chmod -R 755 /mnt/website
-    cp index.html /mnt/website
+    sudo cp index.html /mnt/website
     '''
   }
 }
@@ -23,8 +23,8 @@ pipeline{
   stage('Httpd_container'){
     steps{
       sh'''
-       docker rm -f c1
-       docker run -dp 80:80 --name c1 --network test -v /mnt/website:/usr/local/apache2/htdocs httpd
+       sudo docker rm -f c1
+       sudo docker run -dp 80:80 --name c1 --network test -v /mnt/website:/usr/local/apache2/htdocs httpd
       '''
     }
   }
