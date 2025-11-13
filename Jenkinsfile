@@ -23,6 +23,7 @@ pipeline{
   stage('Httpd_container'){
     steps{
       sh'''
+       docker rm -f c1
        docker run -dp 80:80 --name c1 --network test -v /mnt/website:/usr/local/apache2/htdocs httpd
       '''
     }
