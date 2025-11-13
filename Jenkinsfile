@@ -26,7 +26,7 @@ pipeline {
       steps {
         sh '''
         sudo docker rm -f c1 || true
-        sudo docker run -dp 80:80 --name c1 --network test -v /mnt/website:/usr/local/apache2/htdocs httpd
+        sudo docker run -dp 90:80 --name c1 --network test -v /mnt/website:/usr/local/apache2/htdocs httpd
         '''
       }
     }
