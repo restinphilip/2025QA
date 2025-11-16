@@ -15,9 +15,7 @@ pipeline {
       steps {
         sh '''
           docker volume create storage || true
-          docker run -d --name temp -v storage:/usr/local/apache2/htdocs httpd
-          docker cp index.html temp:/usr/local/apache2/htdocs/index.html
-          docker rm -f temp
+          cp index.html /var/lib/docker/volumes/storage/_data
         '''
       }
     }
