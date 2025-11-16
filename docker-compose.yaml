@@ -29,5 +29,9 @@ services:
 volumes:
   storage:
   storage1:
-
   storage2:
+
+networks:
+  test:
+    driver: bridge
+
