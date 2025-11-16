@@ -10,23 +10,21 @@ pipeline {
         '''
       }
     }
-
-    stage('copy_index') {
+    stage('mk_docker_volume') {
       steps {
         sh '''
-        sudo mkdir -p /mnt/website || true
-        sudo rm -rf /mnt/website/*
-        sudo chmod -R 755 /mnt/website
-        sudo cp index.html /mnt/website
+        docker volume create storage || true
+        docker run -d--name temp -v storage:/usr/local/apache2/htdocs httpd
+        docker cp index.html temp:/usr/local/apache2/htdocs/index.html 
+        docker rm -f temp    
         '''
       }
     }
 
-    stage('Httpd_container') {
+    stage('start-docker-compose') {
       steps {
         sh '''
-        sudo docker rm -f c1 || true
-        sudo docker run -dp 80:80 --name c1 --network test -v /mnt/website:/usr/local/apache2/htdocs httpd
+        docker-compose -f docker-compose.yaml up -d
         '''
       }
     }
