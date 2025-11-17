@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'qa' }
+  agent any
 
   stages {
 
