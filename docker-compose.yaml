@@ -20,7 +20,7 @@ services:
   three:
     image: httpd
     ports:
-      - "95:80"
+      - "96:80"
     volumes:
       - "storage2:/usr/local/apache2/htdocs"
     networks:
@@ -37,3 +37,4 @@ volumes:
 networks:
   test:
     driver: bridge
+
