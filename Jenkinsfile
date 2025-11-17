@@ -18,6 +18,7 @@ pipeline {
           docker volume rm storage
           docker volume create storage || true
           cp index.html /var/lib/docker/volumes/storage/_data
+          chmod 644 /var/lib/docker/volumes/storage/_data/index.html
         '''
       }
     }
