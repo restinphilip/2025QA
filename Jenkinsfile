@@ -15,8 +15,8 @@ pipeline {
       steps {
         sh '''
           docker-compose down -v || true
-          docker volume rm storage
-          docker volume create storage || true
+          docker volume rm storage2
+          docker volume create storage2 || true
           cp index.html /var/lib/docker/volumes/storage/_data
           chmod 644 /var/lib/docker/volumes/storage/_data/index.html
         '''
@@ -26,7 +26,7 @@ pipeline {
     stage('start-docker-compose') {
       steps {
         sh '''
-          docker-compose -f docker-compose.yaml up -d one
+          docker-compose -f docker-compose.yaml up -d three
         '''
       }
     }
