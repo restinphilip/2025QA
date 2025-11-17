@@ -3,14 +3,6 @@ pipeline {
 
   stages {
 
-    stage('custom_network') {
-      steps {
-        sh '''
-          sudo docker network create test --subnet=10.10.0.0/16 --gateway=10.10.0.1 || true
-        '''
-      }
-    }
-
     stage('mk_docker_volume') {
       steps {
         sh '''
