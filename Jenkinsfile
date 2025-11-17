@@ -15,7 +15,7 @@ pipeline {
       steps {
         sh '''
           docker-compose down -v || true
-          docker volume rm storage1
+          docker volume rm storage1 || true
           docker volume create storage1 || true
           cp index.html /var/lib/docker/volumes/storage1/_data
           chmod 644 /var/lib/docker/volumes/storage1/_data/index.html
