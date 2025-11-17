@@ -14,6 +14,8 @@ pipeline {
     stage('mk_docker_volume') {
       steps {
         sh '''
+          docker-compose down -v || true
+          docker volume rm storage
           docker volume create storage || true
           cp index.html /var/lib/docker/volumes/storage/_data
         '''
